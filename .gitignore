@@ -1,162 +1,52 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
 
-# C extensions
-*.so
+from datetime import date, datetime
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+# Define a function to calculate the user's age
+def calculate_age(birth_date, today):
+    # Calculate the difference in years between today's date and the user's birth date
+    # Subtract one if the user has not had a birthday this year
+    Age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    return Age
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+# Define a function to check if a date is valid
+def is_valid_date(date_text):
+    try:
+        datetime.strptime(date_text, "%d/%m/%Y")
+        return True
+    except ValueError:
+        return False
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# Define the main function
+def main():
+    # Get today's date
+    today = date.today()
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+    # Prompt the user to enter their date of birth
+    birth_date_str = input("Please enter your date of birth in the format dd/mm/yyyy: ")
 
-# Translations
-*.mo
-*.pot
+    # Check if the input is a valid date
+    if not is_valid_date(birth_date_str):
+        # If the date is invalid, display an error message and exit the program
+        print("Invalid date format. Please enter a valid date in the format dd/mm/yyyy.")
+        return
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+    # Convert the date string to a date object
+    birth_date = datetime.strptime(birth_date_str, "%d/%m/%Y").date()
 
-# Flask stuff:
-instance/
-.webassets-cache
+    # Calculate the user's age
+    Age = calculate_age(birth_date, today)
 
-# Scrapy stuff:
-.scrapy
+    # Check if today is the user's birthday
+    is_birthday = today.month == birth_date.month and today.day == birth_date.day
 
-# Sphinx documentation
-docs/_build/
+    # Display the result
+    if is_birthday:
+        # If it is the user's birthday, display a birthday message
+        print("Happy birthday! You are", Age, "years old today.")
+    else:
+        # If it is not the user's birthday, display a normal age message
+        print("You are", Age, "years old.")
 
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
-.pdm.toml
-.pdm-python
-.pdm-build/
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+# Call the main function to run the program
+if __name__ == "__main__":
+    main()
